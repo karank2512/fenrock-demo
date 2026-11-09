@@ -88,27 +88,8 @@ def main():
 
 
 def write_review(cases, results, path):
-    import html
-    body_by_id = {c["id"]: (c.get("subject", ""), c.get("body", "")) for c in cases}
-    rows = []
-    for r in results:
-        if r["decision"] != "hold":
-            continue
-        subj, _b = body_by_id.get(r["id"], ("", ""))
-        inj = ""
-        if r.get("injection_attempt"):
-            inj += " <b>injection attempt flagged</b>"
-        if r.get("writer_withdrawal"):
-            inj += " <b>writer withdrawal - human decides</b>"
-        rows.append("<tr><td>%s</td><td>%s%s</td><td><b>%s</b></td></tr>" % (
-            html.escape(r["id"]), html.escape(subj), inj, html.escape(r.get("reason", ""))))
-    page = ("<!doctype html><meta charset=utf-8><title>Complaint review queue</title>"
-            "<style>body{font:14px system-ui;margin:24px}table{border-collapse:collapse}"
-            "td,th{border:1px solid #ccc;padding:6px 10px;vertical-align:top;text-align:left}th{background:#f3f3f3}</style>"
-            "<h1>Complaints held for human review</h1>"
-            "<p>Synthetic demo data - fictional Meridian Mutual Bank. Nothing here was sent to a customer or resolved.</p>"
-            "<table><tr><th>Case</th><th>Subject</th><th>Held because</th></tr>" + "".join(rows) + "</table>")
-    open(path, "w").write(page)
+    from .review_app import snapshot_html
+    open(path, "w").write(snapshot_html(cases, results))
 
 
 if __name__ == "__main__":
