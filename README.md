@@ -82,7 +82,7 @@ Claude Haiku):
 
 First recorded run (2026-11-09): 34/40 decisions matched, with one wrong auto-route
 and five other misses. Every miss was root-caused and fixed, and each fix has a
-regression test (34 deterministic tests in total).
+regression test (33 deterministic tests in total).
 
 Second recorded run (2026-11-09, same frozen corpus, code with those fixes): **39/40
 decisions matched, 18 routed / 22 held, 0 wrong auto-routes observed.** All 4
